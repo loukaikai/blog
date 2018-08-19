@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blog.dao.ArticleInfoMapper">
+  <resultMap id="BaseResultMap" type="com.blog.entity.ArticleInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="summary" jdbcType="VARCHAR" property="summary" />
+    <result column="is_top" jdbcType="BIT" property="is_top" />
+    <result column="traffic" jdbcType="INTEGER" property="traffic" />
+    <result column="create_by" jdbcType="TIMESTAMP" property="create_by" />
+    <result column="modified_by" jdbcType="TIMESTAMP" property="modified_by" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.blog.entity.ArticleInfo">
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, title, summary, is_top, traffic, create_by, modified_by
+  </sql>
+  <sql id="Blob_Column_List">
+    content
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tbl_article_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tbl_article_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.blog.entity.ArticleInfo" useGeneratedKeys="true">
+    insert into tbl_article_info (title, summary, is_top, 
+      traffic, create_by, modified_by, 
+      content)
+    values (#{title,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR}, #{is_top,jdbcType=BIT}, 
+      #{traffic,jdbcType=INTEGER}, #{create_by,jdbcType=TIMESTAMP}, #{modified_by,jdbcType=TIMESTAMP}, 
+      #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.blog.entity.ArticleInfo" useGeneratedKeys="true">
+    insert into tbl_article_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="title != null">
+        title,
+      </if>
+      <if test="summary != null">
+        summary,
+      </if>
+      <if test="is_top != null">
+        is_top,
+      </if>
+      <if test="traffic != null">
+        traffic,
+      </if>
+      <if test="create_by != null">
+        create_by,
+      </if>
+      <if test="modified_by != null">
+        modified_by,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="summary != null">
+        #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="is_top != null">
+        #{is_top,jdbcType=BIT},
+      </if>
+      <if test="traffic != null">
+        #{traffic,jdbcType=INTEGER},
+      </if>
+      <if test="create_by != null">
+        #{create_by,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modified_by != null">
+        #{modified_by,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.blog.entity.ArticleInfo">
+    update tbl_article_info
+    <set>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="summary != null">
+        summary = #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="is_top != null">
+        is_top = #{is_top,jdbcType=BIT},
+      </if>
+      <if test="traffic != null">
+        traffic = #{traffic,jdbcType=INTEGER},
+      </if>
+      <if test="create_by != null">
+        create_by = #{create_by,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modified_by != null">
+        modified_by = #{modified_by,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.blog.entity.ArticleInfo">
+    update tbl_article_info
+    set title = #{title,jdbcType=VARCHAR},
+      summary = #{summary,jdbcType=VARCHAR},
+      is_top = #{is_top,jdbcType=BIT},
+      traffic = #{traffic,jdbcType=INTEGER},
+      create_by = #{create_by,jdbcType=TIMESTAMP},
+      modified_by = #{modified_by,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.blog.entity.ArticleInfo">
+    update tbl_article_info
+    set title = #{title,jdbcType=VARCHAR},
+      summary = #{summary,jdbcType=VARCHAR},
+      is_top = #{is_top,jdbcType=BIT},
+      traffic = #{traffic,jdbcType=INTEGER},
+      create_by = #{create_by,jdbcType=TIMESTAMP},
+      modified_by = #{modified_by,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
